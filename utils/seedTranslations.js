@@ -7,7 +7,7 @@ const fi = require('./translation_fi.js');
 
 async function seed(dbUri) {
   try {
-    await mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
+    await mongoose.connect(dbUri);
     console.log('Connected to MongoDB');
 
     const translations = [

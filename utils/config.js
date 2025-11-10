@@ -7,10 +7,8 @@ const FEEDBACKLIMIT = process.env?.FEEDBACKLIMIT
 const SLOWDOWNAFTER = process.env?.SLOWDOWNAFTER
 
 const MONGOCONFIG = {
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useCreateIndex: true,
-  useUnifiedTopology: true,
+  //useFindAndModify: false,
+  //useCreateIndex: true,
   autoIndex: true,
 };
 

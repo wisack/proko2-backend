@@ -23,7 +23,7 @@ const app = express()
 
 useLimiters && app.set('trust proxy', 1); //for rate limiter 
 
-mongoose.set('useCreateIndex', true)
+//mongoose.set('useCreateIndex', true)
 
 mongoose.connect(config.MONGODB_URI, config.MONGOCONFIG)
   .then(() => {
@@ -34,7 +34,8 @@ mongoose.connect(config.MONGODB_URI, config.MONGOCONFIG)
   })
 
 
-mongoose.set('useFindAndModify', false)
+//mongoose.set('useFindAndModify', false)
+
 app.use(express.json())
 app.use(cors())
 app.use(middleware.tokenExtractor)

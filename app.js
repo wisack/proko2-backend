@@ -23,7 +23,6 @@ const app = express()
 
 useLimiters && app.set('trust proxy', 1); //for rate limiter 
 
-//mongoose.set('useCreateIndex', true)
 
 mongoose.connect(config.MONGODB_URI, config.MONGOCONFIG)
   .then(() => {
@@ -34,20 +33,18 @@ mongoose.connect(config.MONGODB_URI, config.MONGOCONFIG)
   })
 
 
-//mongoose.set('useFindAndModify', false)
-
 app.use(express.json())
 app.use(cors())
 app.use(middleware.tokenExtractor)
-app.use(express.static('build'))
 app.use('/api/feedBack', middleware.feedBackAuthenticated)
 useLimiters && app.use('/api/feedBack', middleware.feedBackLimiter)
 app.use('/api/feedBack', feedBackRouter)
-app.use('/api/translations', translationRouter)
 
 useLimiters && app.use('/api/login', middleware.loginLimiter)
 app.use('/api/login', loginRouter)
 app.use(middleware.isAuthenticated)
+
+app.use('/api/translations', translationRouter)
 useLimiters && app.use(middleware.speedLimiter)
 useLimiters && app.post('/api/messages/announcement', middleware.announcementLimiter)
 app.use('/api/messages', messageRouter)
@@ -60,6 +57,7 @@ app.use('/api/admin', adminController.router);
 app.use('/api/degrees', degreeRouter)
 app.use('/api/koulutus', koulutusRouter)
 
+//app.use(express.static('build'))
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build/index.html'), function (err) {
     if (err) {

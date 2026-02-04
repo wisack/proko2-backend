@@ -9,9 +9,7 @@ const config = require('../utils/config')
 
 //----------------------------------------
 //For /convert endpoint
-const proOccasions = require('../utils/proCards') // Creates first 9 premade occasions for group
-const fmOccasions = require('../utils/fmCards')
-const kummiOccasions = require('../utils/kummicards')
+
 
 const Occasion = require('../models/occasion')
 const Group = require('../models/group')
@@ -91,23 +89,6 @@ router.put("/special/", async (req, res) => {
         return res.status(401).json({ error: 'unauthorized' })
     }
 })
-/*
-router.get("/special/", async (req, res) => {
-    try {
-        const body = req.body
-        const decodedToken = jwt.verify(req.token, process.env.SECRET)
-        const admin = await User.findById(decodedToken.id)
-        if (admin.role !== "admin") {
-            return res.status(401).json({ error: 'Et ole tietokannan hallitsija.' })
-        }
-        const testMode = await User.find({special: "test"})
-        testMode.length > 0 ? res.json(true) : res.json(false)
-    } catch (error) {
-        console.log(error)
-        return res.status(401).json({ error: 'unauthorized' })
-    }
-})
-*/
 
 // Get every user
 router.get("/", async (req, res) => {

@@ -206,7 +206,7 @@ module.exports = {
         Tunnit: "Hours",
         yliopisto: "University of Oulu",
         ToteutuneetKoulutukset: "Actualized trainings: ",
-        ToteutuneetSuunnitelmat: "Actualized plannnig: ",
+        ToteutuneetSuunnitelmat: "Actualized plannning: ",
         Submit: "Submit",
         Koulutukset: "Trainings",
         MaksimiKesto: "Max duration",

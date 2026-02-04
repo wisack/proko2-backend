@@ -2,6 +2,10 @@
 * Populate DB in index.js using groupcontroller.createDefaultCardSets()
 */
 
+//tässä malli miten rakenteen tulee olla, että kortit näkyvät oikein. ohjetekstiin voi laittaa hyperlinkkejä ja ne näkyvät ohjauskorteissa klikattavana.
+//muuttujat tulee olla nimeltään kummi_cards tai pro_cards jotta ne tunnistetaan oikein. pro_cards on kandivaiheeen ohjauskorteille ja kummi_cards vaiheen maisterivaiheen korteille.
+    //jos kortit on laitettu jo kerran tietokantaan ja halutaan tehdä muutoksia, tulee vanhat kortit poistaa tietokannasta. 
+    //tämä tapahtuu manuaalisesti poistamalla tietokannasta defaultoccasioncardsets kummatkin kyseisen vuoden dokumentit ja käynnistämällä palvelin uudestaan jolloin se syöttää kortit uudestaan tietokantaan.
 const template = [
     {
         vuosi: 2023,
@@ -19,79 +23,6 @@ const template = [
         ]
 
     },
-]
-
-const fmpro_cards = [
-    {
-        vuosi: 2023,
-        otsikko: "OMAT SUUNNITELMAT JA MUISTIINPANOT",
-        aiheet: [
-            {
-                alaotsikko: "Yhteydenpito ja ohjauskorttien läpikäynti",
-                aiheet: [
-                    {
-                        aihe: "Sovi jo keväällä tai viimeistään elokuussa yhteydenpidosta tuutoroinnin yhdyshenkilön kanssa. TUTUSTU päivitettyyn PROKO-sovellukseen.",
-                        ohje: "",
-                    },
-                    {
-                        aihe: "Sovi yhteydenpidosta koulutussuunnittelijan kanssa (tällä hetkellä: Heli Alatalo).",
-                        ohje: "",
-                    },
-                ] 
-            },
-            {
-                alaotsikko: "Tutuksi",
-                aiheet: [
-                    {
-                        aihe: "Supertuutorin esittely",
-                        ohje: "Esittele itsesi tuutoreille mahdollisesti jo ennen ryhmänjakotilaisuutta.",
-                    },
-                    {
-                        aihe: "Supertuutorin esittely",
-                        ohje: "Esittele itsesi opiskelijoille orientaatioviikon ryhmänjakotilaisuudessa.",
-                    },
-                    {
-                        aihe: "Supertuutorin rooli",
-                        ohje: "Kerro mikä on toimintasi tarkoitus ja käytännön toteutuminen.",
-                    },
-                    {
-                        aihe: "Ohjauskortit ja niiden merkitys",
-                        ohje: "Sovi hyvissä ajoin tuutorien kanssa ohjauskorttien palautuskäytännöistä (tämä tehdään PROKOn avulla). Käy palautetut kortit läpi säännöllisesti ja ole yhteydessä tuutoriin tai tarvittaessa yhdyshenkilöön, jos löytyy jotain huomautettavaa.",
-                    },
-                ]
-            },
-            {
-                alaotsikko: "Vinkkiapua",
-                aiheet: [
-                    {
-                        aihe: "Ryhmäytyminen",
-                        ohje: "Kerro hyviä vinkkejä tai ideoi tuutorien kanssa erilaisia ryhmäytymistapoja (pelit, leikit, muut tekemiset).",
-                    },
-                    {
-                        aihe: "Harrasteet",
-                        ohje: "Kerro vinkkejä eri harrastejärjestöistä tai kokoa vaikka linkkilista ja jaa se tuutorien kanssa. Tuutorit voivat lisätä tiedostoon myös omia ideoita. Kerro omia kokemuksia yms., jos olet toiminut itse aikaisemmin tuutorina (PROna).",
-                    },
-                ]
-            },
-            {
-                alaotsikko: "Yhteistä toimintaa",
-                aiheet: [
-                    {
-                        aihe: "Tuutorin ryhmien välinen toiminta",
-                        ohje: "Suunnittele ja/tai järjestä yhdessä tuutorien kanssa toimintaa kahden tai useamman ryhmän kesken.",
-                    },
-                    {
-                        aihe: "Maisterit/DI tutuksi",
-                        ohje: "Yhteistä toimintaa voi järjestää myös uusien maisteri-/DI-opiskelijoiden kanssa.",
-                    },
-                    {
-                        aihe: "Muut supertuutorit",
-                        ohje: "Ole mahdollisuuksien mukaan yhteydessä muihin supertuutoreihin (plussat, miinukset, vinkkejä, kehitettävää, jne.).",
-                    },
-                ]
-            },
-        ]
-    }  
 ]
 
 const kummi_cards = [
@@ -1322,7 +1253,6 @@ const pro_cards = [
 ]
 
 module.exports = {
-    fmpro_cards,
     pro_cards,
     kummi_cards,
 }

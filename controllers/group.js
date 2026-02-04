@@ -5,22 +5,12 @@ const Group = require('../models/group')
 const Student = require('../models/student')
 const User = require('../models/user')
 const Occasion = require('../models/occasion')
-
-//const proOccasions = require('../utils/proCards') // Creates first 9 premade occasions for group
-//const fmOccasions = require('../utils/fmCards')
-//const kummiOccasions = require('../utils/kummicards')
-
-const defaultCards = require("../utils/cards_2025.js")
-
+const defaultCards = require("../utils/cards.js")
 const FeedBack = require('../models/feedBack')
-
-//----------------------------------------
-//models
 const ProGroup = require("../models/proGroup.js")
 const ProGroupOccasion = require("../models/proGroupOccasion.js")
 const OccasionCard = require("../models/occasionCard.js")
 const DefaultOccasionCardSet = require("../models/defaultOccasionCardSet.js")
-
 
 const {createEmptyOccasion, populateOccasionStructure} = require("./occasion.js")
 const getProGroupById = async (id) => {
@@ -137,9 +127,7 @@ async function createDefaultCardSet(user){
         const vuosi = new Date().getFullYear();
         let defaultOccasions
         
-        if (user.role === "fmpro") {
-            defaultOccasions = defaultCards.fmpro_cards;
-        } else if (user.role === "pro") {
+        if (user.role === "pro") {
             defaultOccasions = defaultCards.pro_cards;
         } else {
             defaultOccasions = defaultCards.kummi_cards;

@@ -142,11 +142,12 @@ router.post('/suunnitelmatToggle', async (req, res) => {
     } 
     const { suunnitelmatToggle, role } = req.body;
     let selectedLanguage
-    if (role === 'kummi')
+    if (role === 'kummi') {
       selectedLanguage = 'en'
-    else if (role === 'pro')
+    } else if (role === 'pro') {
       selectedLanguage = 'fi'
-    console.log(suunnitelmatToggle, role);
+    }
+    
     const doc = await KoulutusInfo.findOneAndUpdate(
       { selectedLanguage },
       { $set: { suunnitelmatToggle, role } },
@@ -164,6 +165,30 @@ router.get('/suunnitelmatToggle', async (req, res) => {
     if (!req.token) {
       return res.status(401).json({ error: "token missing or invalid" });
     }
+
+    const { role } = req.query;
+
+    let selectedLanguage;
+    if (role === 'kummi') selectedLanguage = 'en';
+    else if (role === 'pro') selectedLanguage = 'fi';
+
+    const doc = await KoulutusInfo.findOne({ selectedLanguage });
+
+    res.json({
+      suunnitelmatToggle: doc?.suunnitelmatToggle ?? null
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Loading failed' });
+  }
+});
+
+/*
+router.get('/suunnitelmatToggle', async (req, res) => {
+  try {
+    if (!req.token) {
+      return res.status(401).json({ error: "token missing or invalid" });
+    }
     const { role } = req.query;
     const doc = await KoulutusInfo.findOne({ role });
     res.json({
@@ -174,5 +199,6 @@ router.get('/suunnitelmatToggle', async (req, res) => {
     res.status(500).json({ message: 'Loading failed' });
   }
 });
+*/
 
 module.exports = router

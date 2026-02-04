@@ -38,5 +38,5 @@ if (arg === 'test') {
 } else if (arg === 'main') {
   seed(process.env.MONGODB_URI);
 } else {
-  console.log('Usage: node seed.js [test|main]');
+  console.log('Käyttö: $ node seedTranslations.js [test|main]');
 }

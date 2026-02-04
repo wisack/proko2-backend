@@ -7,8 +7,6 @@ const FEEDBACKLIMIT = process.env?.FEEDBACKLIMIT
 const SLOWDOWNAFTER = process.env?.SLOWDOWNAFTER
 
 const MONGOCONFIG = {
-  //useFindAndModify: false,
-  //useCreateIndex: true,
   autoIndex: true,
 };
 
@@ -19,11 +17,7 @@ if (process.env.NODE_ENV === 'development') {
 const tokenOptions = {
   expiresIn: process.env.TOKENMINUTES * 60 || 60 * 60
 }
-/* deprecate expiresIn
-const palauteTokenOptions = {
-  expiresIn: process.env.PALAUTETOKENMINUTES * 60 || 20 * 60
-}
-*/
+
 const BASEPASSWORD = process.env.BASEPASSWORD || "password123"
 
 const textFieldSizes = {
@@ -45,7 +39,6 @@ module.exports = {
     tokenOptions,
     MONGOCONFIG,
     textFieldSizes,
-    //palauteTokenOptions,
     RATELIMITERS,
     FEEDBACKLIMIT,
     BASEPASSWORD,

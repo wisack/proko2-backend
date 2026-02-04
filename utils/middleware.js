@@ -70,7 +70,7 @@ const occasionLimiter = rateLimit({
 
 const loginLimiter = rateLimit({
   max: 5,
-  windowMs: 20 * 60 * 1000, // 20 minutes  
+  windowMs: 10 * 60 * 1000, // 10 minutes  
   message: 'Try again later!',
   keyGenerator: function (req) {
     return req.body.username.substring(0, MAXLENGTH) + req.ip;
@@ -79,24 +79,24 @@ const loginLimiter = rateLimit({
 
 const feedBackLimiter = rateLimit({
   max: config.FEEDBACKLIMIT ? config.FEEDBACKLIMIT : 15,
-  //windowMs: 30 * 60 * 1000, // 30 minutes
-  //message: 'You seem to have given your feedback already!',
+  windowMs: 30 * 60 * 1000, // 30 minutes
+  message: 'You seem to have given your feedback already!',
   keyGenerator: function (req) {
     return req.palauteID + req.ip
   }
 })
 
 const speedLimiter = slowDown({
-  windowMs: 30 * 60 * 1000, // 30 minutes 
-  delayAfter: config.SLOWDOWNAFTER ? config.SLOWDOWNAFTER : 75,
-  delayMs: 500,
+  windowMs: 5 * 60 * 1000,               
+  delayAfter: config.SLOWDOWNAFTER || 500, 
+  delayMs: 100,                          
+  maxDelayMs: 2000,                   
   keyGenerator: function (req) {
-    // use id as key if exists (should exist in all cases. Ip as backup)
-    return req.id ? req.id : req.ip;
+    return req.ip; 
   }
-})
+});
 const announcementLimiter = rateLimit({
-  max: 30,                  //30kpl 30min alkaa olemaan jo spämmiä
+  max: 10,                  //10kpl 30min alkaa olemaan jo spämmiä
   windowMs: 30 * 60 * 1000, // 30 minutes  
   message: 'Try again later!',
   keyGenerator: function (req) {

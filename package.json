@@ -14,7 +14,7 @@
     "type": "git",
     "url": "-"
   },
-  "author": "Martti Mourujärvi",
+  "author": "Sami Wickström",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

@@ -67,39 +67,18 @@ usersRouter.post('/language', async (req, res) => {
         return res.status(401).json({ error: 'token missing or invalid' })
     }
 })
-/*
-usersRouter.post('/training', async (req, res) => {
-    
+
+
+// salasanan vaihto
+usersRouter.put('/', async (req, res) => {
     try {
         const body = req.body
         const decodedToken = jwt.verify(req.token, process.env.SECRET)
-        if (decodedToken) {
-            const user = await User.findByIdAndUpdate(decodedToken.id, { training: body.training }).select('-username')
-            return res.status(200).json(user)
-        } else {
-            return res.status(401).json({ error: 'token missing or invalid' })
-        }
-    } catch (error) {
-        console.log(error)
-        return res.status(401).json({ error: 'token missing or invalid' })
-    }
-})
-    */
-
-// salasanan vaihto
-usersRouter.put('/:id', async (req, res) => {
-    try {
-        const body = req.body
-        const decodedToken = jwt.verify(req.params.id, process.env.SECRET)
-        if (!req.token || !decodedToken.id) {
+        if (!decodedToken.id) {
             return res.status(401).json({ error: 'token missing or invalid' })
         }
         const user = await User.findById(decodedToken.id)
         const passwordCorrect = user ? await bcryptjs.compare(body.oldPassword, user.passwordHash) : false;
-        //const passwordCorrect = user == null
-        //      ? false
-        //      : await bcryptjs.compare(body.oldPassword, user.passwordHash)
-
         if (!passwordCorrect) {
             return res.status(401).json({ error: 'Vanha salasana kirjoitettu väärin!' })
         }

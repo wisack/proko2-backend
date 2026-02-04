@@ -291,16 +291,16 @@ router.delete('/:id', async (req, res) => {
         //@NOTE
         //Since returned cards can't be deleted and only returned cards have archive data, we don't have to worry about archive data.
                 
-        await FeedBack.findByIdAndRemove(occasion.palaute)
+        await FeedBack.findByIdAndDelete(occasion.palaute)
 
         if(occasion.muokattuKortti){
-            OccasionCard.findByIdAndRemove(occasion.muokattuKortti)
+            await OccasionCard.findByIdAndDelete(occasion.muokattuKortti)
         }
 
         foundGroup.occasions = foundGroup.occasions.filter(b => b._id.toString() !== occasion._id.toString())
         
         await foundGroup.save()
-        await occasion.remove()
+        await occasion.deleteOne()
 
         //@ Why do we return the occasion? Just to remove it from from the frontend state?
         // If so we should just send the id and not the whole object. H Peteri 2022

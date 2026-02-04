@@ -57,7 +57,7 @@ app.use('/api/admin', adminController.router);
 app.use('/api/degrees', degreeRouter)
 app.use('/api/koulutus', koulutusRouter)
 
-//app.use(express.static('build'))
+app.use(express.static('build'))
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build/index.html'), function (err) {
     if (err) {

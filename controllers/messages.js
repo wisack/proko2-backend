@@ -67,7 +67,7 @@ router.delete('/announcement/:id', async (req, res) => {
         const announcement = await Announcement.findById(req.params.id).populate("sender")
                 
         if (announcement?.sender?.id === decodedToken.id) {
-            announcement.remove()
+            await announcement.deleteOne()
             return res.status(200).json(announcement)
         }
         return res.status(401).json({error: "unauthorized"})

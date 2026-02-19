@@ -27,7 +27,7 @@ const template = [
 
 const kummi_cards = [
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "ARRIVAL",
         aiheet:[
             {
@@ -50,7 +50,7 @@ const kummi_cards = [
         ]
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "PRE-ARRIVAL COMMUNICATION",
         aiheet:[
             {
@@ -66,7 +66,7 @@ const kummi_cards = [
 
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "GET TO KNOW YOUR OWN GROUP AND UNIVERSITY",
         aiheet:[
             {
@@ -128,7 +128,7 @@ const kummi_cards = [
 
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "LIFE IN FINLAND",
         aiheet:[
             {
@@ -201,7 +201,7 @@ const kummi_cards = [
         ]
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "START OF STUDIES",
         aiheet:[
             {
@@ -209,7 +209,7 @@ const kummi_cards = [
                 aiheet: [
                     {
                         aihe: "Peppi",
-                        ohje: "Introduce Peppi. Show them the Peppi guide. https://opas.peppi.oulu.fi/en/index?period=2024-2025 - Show how to download documents from Peppi (Atomi).",
+                        ohje: "Introduce Peppi. Show them the Peppi guide. https://opas.peppi.oulu.fi/en/index?period=2024-2026 - Show how to download documents from Peppi (Atomi).",
                     },
                     {
                         aihe: "Course registrations",
@@ -266,7 +266,7 @@ const kummi_cards = [
 
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "UNIVERSITY TOUR",
         aiheet:[
             {
@@ -359,7 +359,7 @@ const kummi_cards = [
 
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "FREETIME ACTIVITIES",
         aiheet:[
             {
@@ -449,7 +449,7 @@ const kummi_cards = [
 
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "WELLBEING IN STUDIES",
         aiheet:[
             {
@@ -501,7 +501,7 @@ const kummi_cards = [
         ]
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "CITY OF OULU TOUR",
         aiheet:[
             {
@@ -516,7 +516,7 @@ const kummi_cards = [
         ]
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "JOINT MEETING FOR STUDENTS",
         aiheet:[
             {
@@ -552,7 +552,7 @@ const kummi_cards = [
         ]
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "GUILDS",
         aiheet:[
             {
@@ -572,7 +572,7 @@ const kummi_cards = [
 
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "CAREER SERVICES AND STUDENT EXCHANGE",
         aiheet:[
             {
@@ -592,7 +592,7 @@ const kummi_cards = [
 
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "CATCH-UP MEETING",
         aiheet:[
             {
@@ -630,7 +630,7 @@ const kummi_cards = [
 const pro_cards = [
 
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "OMA RYHMÄ TUTUKSI",
         aiheet:[
             {
@@ -679,7 +679,7 @@ const pro_cards = [
 
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "YLIOPISTO TUTUKSI",
         aiheet:[
             {
@@ -739,7 +739,7 @@ const pro_cards = [
 
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "OPINNOT ALKUUN",
         aiheet:[
             {
@@ -759,7 +759,7 @@ const pro_cards = [
                     },
                     {
                         aihe: "Peppi Opinto-opas",
-                        ohje: "Näytä UUSIN Peppi-opinto-opas: https://opas.peppi.oulu.fi/fi/index?period=2025-2026 (päivitetään vuosittain; yllättävistä muutoksista tiedottaa mm. omaope)."
+                        ohje: "Näytä UUSIN Peppi-opinto-opas: https://opas.peppi.oulu.fi/fi/index?period=2026-2026 (päivitetään vuosittain; yllättävistä muutoksista tiedottaa mm. omaope)."
                     },
                     {
                         aihe: "Kurssi-ilmoittautumiset",
@@ -832,7 +832,7 @@ const pro_cards = [
 
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "FUKSINA KILLASSA",
         aiheet:[
             {
@@ -905,7 +905,7 @@ const pro_cards = [
 
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "VAPAALLA VÄLILLÄ",
         aiheet:[
             {
@@ -955,7 +955,7 @@ const pro_cards = [
 
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "TERVEENÄ OPINNOISSA",
         aiheet:[
             {
@@ -1037,7 +1037,7 @@ const pro_cards = [
 
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "KAIKKI FUKSIT YHDESSÄ",
         aiheet:[
             {
@@ -1103,7 +1103,7 @@ const pro_cards = [
 
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "TOINEN TUUTORIRYHMÄ TUTUKSI",
         aiheet:[
             {
@@ -1173,7 +1173,7 @@ const pro_cards = [
 
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "KERTAUS JA KUULUMISET",
         aiheet:[
             {
@@ -1215,7 +1215,7 @@ const pro_cards = [
 
     },
     {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "SELF-HACK",
         aiheet:[
             {
@@ -1231,7 +1231,7 @@ const pro_cards = [
 
     },
         {
-        vuosi: 2025,
+        vuosi: 2026,
         otsikko: "KAUPUNKIKIERROS",
         aiheet:[
             {

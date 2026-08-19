@@ -16,11 +16,13 @@ const ArchiveTask = async () => {
 cron.schedule(ARCHIVE_TIME, ArchiveTask);
 
 const groupController = require('./controllers/group')
+/*
 const populateDBWithDefaultCards = async () => {
     await groupController.createDefaultCardSets();
     console.log("default cards submitted to MongoDB")
 }
-populateDBWithDefaultCards();
+    */
+//populateDBWithDefaultCards(); //managed in frontend now
 
 server.listen(config.PORT, () => {
     console.log(`Server running on port ${config.PORT}`)

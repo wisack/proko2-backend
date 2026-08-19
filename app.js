@@ -17,6 +17,9 @@ const messageRouter = require('./controllers/messages')
 const translationRouter = require('./controllers/translation')
 const degreeRouter = require('./controllers/degree')
 const koulutusRouter = require('./controllers/koulutus')
+const infoRouter = require('./controllers/info')
+const { seedTranslationsIfNeeded } = require('./utils/seedTranslations')
+const { seedAdminUserIfNeeded } = require('./utils/seedAdmin')
 
 const useLimiters = config.RATELIMITERS   //set off for quick deactivation of rate limiting
 const app = express()
@@ -25,8 +28,10 @@ useLimiters && app.set('trust proxy', 1); //for rate limiter
 
 
 mongoose.connect(config.MONGODB_URI, config.MONGOCONFIG)
-  .then(() => {
+  .then(async () => {
     logger.info('connected to MONGODB')
+    await seedTranslationsIfNeeded()
+    await seedAdminUserIfNeeded()
   })
   .catch((error) => {
     logger.error('error connection to MongoDB:', error.message)
@@ -45,6 +50,7 @@ useLimiters && app.use('/api/login', middleware.loginLimiter)
 app.use('/api/login', loginRouter)
 
 app.use('/api/translations', translationRouter)
+app.use('/api/info', infoRouter)
 app.use('/api', middleware.isAuthenticated)
 
 useLimiters && app.use(middleware.speedLimiter)

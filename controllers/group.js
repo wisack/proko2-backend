@@ -5,7 +5,7 @@ const Group = require('../models/group')
 const Student = require('../models/student')
 const User = require('../models/user')
 const Occasion = require('../models/occasion')
-const defaultCards = require("../utils/cards.js")
+//const defaultCards = require("../utils/cards.js")
 const FeedBack = require('../models/feedBack')
 const ProGroup = require("../models/proGroup.js")
 const ProGroupOccasion = require("../models/proGroupOccasion.js")
@@ -114,7 +114,7 @@ const getDefaultCardSetForUser = async (user, vuosi) => {
 
 //----------------------------------------
 
-
+/*
 async function createDefaultCardSets(){
     await createDefaultCardSet({role: "pro"});
     await createDefaultCardSet({role: "kummi"});
@@ -157,14 +157,11 @@ async function createDefaultCardSet(user){
         console.log(error);
     }
 }
-
+*/
 
 // admins create groups endpoint. Groups are created with a csv file. Expects array of student strings and pros data.
 router.post('/', async (req, res) => {
     try {
-        //@NOTE, we expect that users are created during the summer break.
-        //This will break if groups are created after the year has changed, since users will be counted as being part of the next years statistics
-        //Also occasion cards are chosen based on the year
         const vuosi = new Date().getFullYear();
         
         const decodedToken = jwt.verify(req.token, process.env.SECRET)
@@ -316,5 +313,4 @@ module.exports = {
     router,
     populateProGroupStructure,
     populateProGroupStructure_Array,
-    createDefaultCardSets,
 }

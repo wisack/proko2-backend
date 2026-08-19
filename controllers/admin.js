@@ -215,8 +215,8 @@ const archiveOccasionCard = async (card_id, expected_role, keepPersonalInfo) => 
     try{
         const card = await OccasionCard.findById(card_id).exec();
         const foundOccasions = await ProGroupOccasion.find({alkuperainenKortti: card_id, suoritettu: true})
-              .populate({ path: "user", model: User, select: "science"}) //we don't care about instructors actual username
-              .populate({ path: "palaute", model: FeedBack}) //we don't care about instructors actual username
+              .populate({ path: "user", model: User, select: "science"}) 
+              .populate({ path: "palaute", model: FeedBack}) 
               .populate({ path: "muokattuKortti", model: OccasionCard})
               .exec();
         
@@ -407,9 +407,6 @@ const archiveProGroup = async (group, archiveName) => {
                 res.kesto_min = Math.min(res.kesto_min, occ.kesto);
                 res.kesto_max = Math.max(res.kesto_max, occ.kesto);
 
-
-                //@NOTE since we don't update every occasion after user updates their student count, the occasion might have students in the participated array which are no longer in the group
-                //So we have to match the participation ids to the current students in the group. Otherwise overview page would have participation-% over 100%.  H Peteri 2022
                 const paikalla_lkm =  occ.paikalla.filter(student_0 => 
                     group.students.find(student_1 => student_0.toString() === student_1.toString())
                 ).length;
@@ -478,7 +475,7 @@ const archiveProGroup = async (group, archiveName) => {
         if(!archive){
             const saved = await new ProGroup_Archive({
                 group: group._id,
-                vuosi: group.vuosi? group.vuosi : 2021, //groups should have year, but old model doesn't have it yet, so use the current year //H. Peteri 2022
+                vuosi: group.vuosi? group.vuosi : 2021, 
                 archived_date: new Date(),
                 science: group.science,
                 ...createInfo                
@@ -548,201 +545,7 @@ router.post("/archive", async (req, res) => {
         return res.status(401).json({ error: 'unauthorized' })        
     }
 })
-/*
-router.post("/convert", async (req, res) => {
-    try {
-        const body = req.body
-        const decodedToken = jwt.verify(req.token, process.env.SECRET)
-        const admin = await User.findById(decodedToken.id)
-        if (admin.role !== "admin") {
-            return res.status(401).json({ error: 'Et ole tietokannan hallitsija.' })
-        }
-        console.log("Convert old users to new users");
-        //----------------------------------------
-        //start of arrow func
-        const mapCompletedTasks = (cardAiheet, oldOccasionAiheet, kohta) => {
-            //maps lapikayty aihe to cards tasks id
-            if(cardAiheet.length !== oldOccasionAiheet.length){  //this shouldn't be possible since the card and occasion should match
-                console.log(kohta, " MapCompletedTasks aiheet array length doesn't match", cardiiheet, oldOccasionAiheet)
-                return []
-            }
-            
-            let mappedSuoritukset = [];
-            
 
-            for(let i = 0; i < oldOccasionAiheet.length; i++){
-                const tasks_0 = oldOccasionAiheet[i].aiheet;
-                const tasks_1 = cardAiheet[i].aiheet;
-                
-                if(tasks_1.length !== tasks_0.length){ //this shouldn't be possible since the card and occasion should match
-                    console.log(kohta, " MapCompletedTasks tasks array length doesn't match\>tasks_0", tasks_0, "\ntasks_1->", tasks_1, "\ncardAiheet", cardAiheet, "\nocc aiheet", oldOccasionAiheet)
-                    return []
-                }
-                
-                for(let j = 0; j < tasks_0.length; j++){
-                    if(tasks_0[j].lapikayty){
-                        mappedSuoritukset.push(tasks_1[j]._id);
-                    }                        
-                }
-            }
-            return mappedSuoritukset;
-        }
-        //end of arrow func
-        //----------------------------------------
-        
-        const allGroups = await Group.find()
-              .populate({ path: 'occasions', model: Occasion})
-              .populate({ path: 'user', model: User, select: '-username' })
-
-        
-
-        const proCards = await DefaultOccasionCardSet.findOne({expected_role: "pro"}).populate({path: "card_ids"});
-        const fmCards = await DefaultOccasionCardSet.findOne({expected_role: "fmpro"}).populate({path: "card_ids"});
-        const kummiCards = await DefaultOccasionCardSet.findOne({expected_role: "kummi"}).populate({path: "card_ids"});
-        
-        const allCards = new Map();
-        allCards["pro"] = proCards.card_ids;
-        allCards["fmpro"] = fmCards.card_ids;
-        allCards["kummi"] = kummiCards.card_ids;
-
-        for(const group of allGroups){
-            
-            let newOccasions = [];
-            let completedTasks = [];
-            
-            //map old occasions to default cards 
-            for(const occasion of group.occasions){
-                const alkuperainenKortti = allCards[group.user.role].find(it => it.otsikko.substring(0, maxTextLength_header) === occasion.otsikko.substring(0, maxTextLength_header))
-                let   muokattuKortti = undefined;
-
-                if(alkuperainenKortti){
-                    
-                    //----------------------------------------
-                    //start of arrow func
-                    const mapOccasionToCard = (alkuperainenKortti, occasion) => {
-                        let mappedTopics = [] 
-                        let isMatch = true;
-                        
-                        if(alkuperainenKortti.aiheet.length !== occasion.aiheet.length)
-                            isMatch = false;
-                        
-                        for(const aihe of occasion.aiheet){
-                            const matchedAihe = alkuperainenKortti.aiheet.find(it => it.alaotsikko.substring(0, maxTextLength_header) === aihe.alaotsikko.substring(0, maxTextLength_header));
-
-                            if(!matchedAihe)
-                                isMatch = false;
-                            else if(matchedAihe.aiheet.length != aihe.aiheet.length)
-                                isMatch = false;
-                            
-                            let mappedTasks = []
-                            
-                            if(matchedAihe){
-                                for(const task of aihe.aiheet){
-                                    const matchedTask = matchedAihe.aiheet.find(it => it.aihe.substring(0, maxTextLength_small) === task.aihe.substring(0, maxTextLength_small) && it.ohje.substring(0, maxTextLength_medium) === task.ohje.substring(0, maxTextLength_medium))
-                                                                        
-                                    let t = {
-                                        aihe: task.aihe,
-                                        ohje: task.ohje,
-                                        original_id: matchedTask?.id,
-                                    }
-                                    
-                                    if(!matchedTask){
-                                        isMatch = false;
-                                    }                                    
-                                    mappedTasks.push(t)
-                                }
-                            }else{
-                                mappedTasks = aihe.aiheet
-                            }
-
-                            
-                            let topic = {
-                                alaotsikko: aihe.alaotsikko,
-                                aiheet: mappedTasks,
-                                original_id : matchedAihe?.id,
-                            }        
-                            mappedTopics.push(topic)
-                        }
-                        return {
-                            isMatch: isMatch,
-                            otsikko: occasion.otsikko,
-                            aiheet: mappedTopics,
-                        }
-                    }
-                    //End of arrow func
-                    //----------------------------------------
-                                        
-                    const result = mapOccasionToCard(alkuperainenKortti, occasion)
-                    if(!result.isMatch){
-                        
-                        muokattuKortti = await createCustomOccasionCard(result)
-                        completedTasks = mapCompletedTasks((await OccasionCard.findById(muokattuKortti)).aiheet, occasion.aiheet, 0)
-                    }else{
-                        //same card can be used
-                        completedTasks = mapCompletedTasks(alkuperainenKortti.aiheet, occasion.aiheet, 1)
-                    }
-                }else{ //cant find a card with a matching name, so create a new one
-                    muokattuKortti = await createCustomOccasionCard(occasion)
-                    completedTasks = mapCompletedTasks((await OccasionCard.findById(muokattuKortti)).aiheet, occasion.aiheet, 2)
-                }
-                
-                const newOccasionData = {
-                    palaute: occasion.palaute,
-                    user: group.user._id,
-                    ... createCustomOccasion({
-                        ohjaustapa: occasion.ohjaustapa,
-                        ohjauspaikka: occasion.ohjauspaikka,
-                        paikalla: occasion.paikalla,
-                        toiveet: occasion.toiveet,
-                        kotitehtava: occasion.kotitehtava,
-                        lisäAiheet: occasion.lisäAiheet, //createInfo uses ä instead of a
-                        suoritettu: occasion.suoritettu,
-                        muokattu: (muokattuKortti ? true : false),
-                        muokkatus: occasion.muokkaus,
-                        kesto: occasion.kesto,
-                        date: occasion.date,
-                    }),
-                    muokattuKortti: muokattuKortti,
-                    alkuperainenKortti: alkuperainenKortti?._id,
-                    suoritetutAiheet: completedTasks,
-                }
-
-                
-
-                const savedOccasion = await new ProGroupOccasion(newOccasionData).save();
-                newOccasions.push(savedOccasion._id)
-            }
-            //create new proGroup
-            const newGroupData = {
-                science: group.user.science,
-                name: group.user.name,
-                students: group.students,
-                occasions: newOccasions,
-                user: group.user._id,
-            }
-
-            new ProGroup(newGroupData).save()
-        }
-        
-        
-        // For converting cards which don't have dates set
-        // const result = await OccasionCard.updateMany({}, {vuosi: 2021});
-        // console.log("occasion cards updated ", result.n );
-        // console.log("done")
-        
-        
-        await Occasion.deleteMany({})
-        await Group.deleteMany({})
-
-
-        return res.status(201);
-        
-    } catch (error) {
-        console.log(error)
-        return res.status(401).json({ error: 'unauthorized' })
-    }
-})
-*/
 // salasanan palautus
 // @ Resets users password, based on id, to BASEPASSWORD declared in config.js
 router.put("/:id", async (req, res) => {
@@ -763,6 +566,112 @@ router.put("/:id", async (req, res) => {
         return res.status(401).json({ error: 'unauthorized' })
     }
 })
+
+// Get all default cards
+router.get("/cards", async (req, res) => {
+    try {
+        const decodedToken = jwt.verify(req.token, process.env.SECRET)
+        const admin = await User.findById(decodedToken.id)
+        if (admin.role !== "admin") {
+            return res.status(401).json({ error: 'Et ole tietokannan hallitsija.' })
+        }
+        const cardSets = await DefaultOccasionCardSet.find({}).populate("card_ids")
+        res.json(cardSets)
+    } catch (error) {
+        console.log(error)
+        return res.status(401).json({ error: 'unauthorized' })
+    }
+})
+
+// Update or create a DefaultOccasionCardSet (e.g. for a new year)
+router.post("/cardsets", async (req, res) => {
+    try {
+        const decodedToken = jwt.verify(req.token, process.env.SECRET)
+        const admin = await User.findById(decodedToken.id)
+        if (admin.role !== "admin") {
+            return res.status(401).json({ error: 'Et ole tietokannan hallitsija.' })
+        }
+        const body = req.body
+        const newSet = new DefaultOccasionCardSet({
+            vuosi: body.vuosi,
+            expected_role: body.expected_role,
+            card_ids: []
+        })
+        const savedSet = await newSet.save()
+        res.status(201).json(savedSet)
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ error: error.message })
+    }
+})
+
+// Create a new card in a set
+router.post("/cards", async (req, res) => {
+    try {
+        const decodedToken = jwt.verify(req.token, process.env.SECRET)
+        const admin = await User.findById(decodedToken.id)
+        if (admin.role !== "admin") {
+            return res.status(401).json({ error: 'Et ole tietokannan hallitsija.' })
+        }
+        const body = req.body
+        const newCard = new OccasionCard({
+            vuosi: body.vuosi,
+            otsikko: body.otsikko,
+            aiheet: body.aiheet
+        })
+        const savedCard = await newCard.save()
+
+        const set = await DefaultOccasionCardSet.findById(body.cardSetId)
+        set.card_ids = set.card_ids.concat(savedCard._id)
+        await set.save()
+
+        res.status(201).json(savedCard)
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ error: error.message })
+    }
+})
+
+// Update a card
+router.put("/cards/:id", async (req, res) => {
+    try {
+        const decodedToken = jwt.verify(req.token, process.env.SECRET)
+        const admin = await User.findById(decodedToken.id)
+        if (admin.role !== "admin") {
+            return res.status(401).json({ error: 'Et ole tietokannan hallitsija.' })
+        }
+        const body = req.body
+        const updatedCard = await OccasionCard.findByIdAndUpdate(req.params.id, body, { new: true })
+        res.json(updatedCard)
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ error: error.message })
+    }
+})
+
+// Delete a card
+router.delete("/cards/:id", async (req, res) => {
+    try {
+        const decodedToken = jwt.verify(req.token, process.env.SECRET)
+        const admin = await User.findById(decodedToken.id)
+        if (admin.role !== "admin") {
+            return res.status(401).json({ error: 'Et ole tietokannan hallitsija.' })
+        }
+        await OccasionCard.findByIdAndDelete(req.params.id)
+        
+        // Remove from all sets
+        await DefaultOccasionCardSet.updateMany(
+            { card_ids: req.params.id },
+            { $pull: { card_ids: req.params.id } }
+        )
+        
+        res.status(204).end()
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ error: error.message })
+    }
+})
+
 module.exports = {
     router,
     archiveTask

@@ -6,16 +6,13 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "start": "cross-env NODE_ENV=production node index.js",
-    "buildfront": "rm -rf build && cd ../digiprofront/ && npm run build && cp -r build ../digiprobackend",
-    "deploy": "git push heroku master",
-    "deploysemi": "npm run buildfront && git add . && git commit -m newdeploy && npm run deploy"
   },
   "repository": {
     "type": "git",
     "url": "-"
   },
-  "author": "Sami Wickström",
-  "license": "ISC",
+  "author": "-",
+  "license": "BSD-2",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.5.0",

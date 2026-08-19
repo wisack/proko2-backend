@@ -41,10 +41,6 @@ const userSchema = mongoose.Schema({
     type: Number,
     default: 0
   },
-  //koulutuksetKesto: {
-  //  type: [Number],
-  //  default: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-  //},
   koulutukset: [userKoulutusSchema],
   suunnitelma: {
     type: String
@@ -61,7 +57,6 @@ userSchema.set('toJSON', {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
     delete returnedObject.__v
-    // the passwordHash should not be revealed
     delete returnedObject.passwordHash
   }
 })

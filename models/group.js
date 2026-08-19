@@ -11,7 +11,7 @@ const groupSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Occasion'
     }],
-    kertymä: Number, //use laskeKertyma function instead of this
+    kertymä: Number, 
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

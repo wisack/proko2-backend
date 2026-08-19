@@ -96,8 +96,8 @@ const speedLimiter = slowDown({
   }
 });
 const announcementLimiter = rateLimit({
-  max: 10,                  //10kpl 30min alkaa olemaan jo spämmiä
-  windowMs: 30 * 60 * 1000, // 30 minutes  
+  max: 10,                  
+  windowMs: 30 * 60 * 1000, 
   message: 'Try again later!',
   keyGenerator: function (req) {
     return req.id;
